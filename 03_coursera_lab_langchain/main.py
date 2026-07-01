@@ -1,5 +1,7 @@
 # main file 
 
+# checking things to work 
+
 
 from dotenv import load_dotenv
 import os
