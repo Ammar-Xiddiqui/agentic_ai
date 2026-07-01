@@ -1,16 +1,18 @@
-import re
+from langchain.tools import tool
 
-def calculate_power(input_text):
-    numbers = re.findall(r"-?\d+\.?\d*", input_text)
 
-    if len(numbers) < 2:
-        return {"error": "Need base and exponent"}
+@tool
+def calculate_power(base: int, exponent: int) -> int:
+    """
+    Calculate base raised to exponent.
+    """
+    return base ** exponent
 
-    base = float(numbers[0])
-    exponent = float(numbers[1])
 
-    return {
-        "base": base,
-        "exponent": exponent,
-        "result": base ** exponent
-    }
+@tool
+def multiply(num1: int, num2: int) -> int:
+    """
+    Calculate base raised to exponent.
+    """
+    return num1 * num2
+    

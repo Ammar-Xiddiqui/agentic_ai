@@ -1,27 +1,39 @@
-# main file 
-
-# checking things to work 
-
-
 from dotenv import load_dotenv
-import os
 
-from langchain_openai import ChatOpenAI
-from agent import build_agent
+from langchain.agents import create_agent
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+from tools import calculate_power,multiply
 
 load_dotenv()
 
-llm = ChatOpenAI(
-    model="gpt-4o-mini",
-    temperature=0
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash",
+    temperature=0,
 )
 
-agent = build_agent(llm)
+agent = create_agent(
+    model=llm,
+    tools=[calculate_power,multiply],
+    system_prompt="You are a helpful math assistant."
+)
 
 while True:
-    query = input("You: ")
 
-    if query.lower() == "exit":
+    question = input("You: ")
+
+    if question.lower() == "exit":
         break
 
-    print(agent.invoke(query))
+    response = agent.invoke(
+        {
+            "messages": [
+                {
+                    "role": "user",
+                    "content": question,
+                }
+            ]
+        }
+    )
+
+    print(response["messages"][-1].content)
