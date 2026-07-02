@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from langchain.agents import create_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-from tools import calculate_power,multiply
+from tools import calculate_power,multiply,modulus,add,subtract,divide
 
 load_dotenv()
 
@@ -14,7 +14,7 @@ llm = ChatGoogleGenerativeAI(
 
 agent = create_agent(
     model=llm,
-    tools=[calculate_power,multiply],
+    tools=[calculate_power,multiply,modulus,add,subtract,divide],
     system_prompt="You are a helpful math assistant."
 )
 
